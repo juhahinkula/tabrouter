@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { Link, Route, Routes, BrowserRouter } from 'react-router-dom';
+import Home from './components/Home';
+import Contact from './components/Contact';
+import About from './components/About';
 
 function App() {
+  const [value, setValue] = useState('/');
+
+  const handleChange = (event, newValue)=> {
+    setValue(newValue);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab value="/" label="Home" component={Link} to="/" />
+          <Tab value="/contact" label="Contact" component={Link} to="/contact" />
+          <Tab value="/about" label="About" component={Link} to="/about" />
+        </Tabs>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
